@@ -1,0 +1,10 @@
+page-profile {
+  $toolbar-md-active-color:                 $main;
+  $toolbar-md-inactive-color:               #fff;
+  $segment-button-md-text-color-activated:  #fff;
+
+  // in use..
+  .segment-md .segment-button {
+    color: $main !important;
+  }
+}

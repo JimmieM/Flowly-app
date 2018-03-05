@@ -1,0 +1,51 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{chat_username}}</ion-title>
+    <ion-buttons end>
+      <button (click)="openProfile()">
+        <ion-icon name='contact' style="color:white;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content #content>
+
+  <div class="chatBubble" *ngFor="let chat of chats">
+
+  <div *ngIf="chat.chat_from_id === userInformation._user_id" class="chat-bubble right">
+    <div class="message">{{chat.chat_message}}</div>
+    <div class="message-detail">
+        <span style="font-weight:bold;">You</span>,
+        <span>{{chat.chat_date}}</span>
+    </div>
+  </div>
+  <div *ngIf="chat.chat_from_id !== userInformation._user_id" class="chat-bubble left">
+    <div class="message">{{chat.chat_message}}</div>
+    <div class="message-detail">
+        <span style="font-weight:bold;">{{chat_username}}</span>,
+        <span>{{chat.chat_date}}</span>
+    </div>
+  </div>
+</div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label style="margin:0px;"></ion-label>
+      <div item-content style="width:100%;">
+        <ion-input [(ngModel)]="chat_text" type="text" value="" (ngModelChange)="chatInput($event)" placeholder="Message..."></ion-input>
+      </div>
+    </ion-item>
+    <ion-buttons right>
+      <button [disabled]="messageSend === false" (click)="sendChat()" style="font-size: 3.4rem;" ion-button clear>
+        <ion-icon name='send' style="color:white;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

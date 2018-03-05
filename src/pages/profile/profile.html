@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <ion-title>Profile</ion-title>
+    <ion-buttons end>
+      <button *ngIf="loggedIn === 'true'" ion-button clear (click)="goToSettings()">
+        <ion-icon style="color:white;" name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <ion-refresher (ionRefresh)="updateProfileView(true,$event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="http://www.top-madagascar.com/assets/images/admin/user-admin.png">
+      </ion-avatar>
+      <h2 *ngIf="loggedIn === 'true'">{{username}}</h2>
+      <p>You're on flow</p>
+
+      <button *ngIf="loggedIn !== 'true'" (click)="goToLoginPage()" ion-button color="primary">Login to chat with others</button>
+    </ion-item>
+  </ion-card>
+
+  <ion-list *ngIf="awaitingContacts.length > 0 || requesteeContacts.length > 0">
+    <ion-list-header>
+      Requests
+    </ion-list-header>
+    <ion-item *ngIf="requesteeContacts.length > 0">
+      <h2>You have {{requesteeContacts.length}} contact request <span *ngIf="requesteeContacts.length > 1">s</span></h2>
+      <p>Awating response from contact</p>
+    </ion-item>
+
+      <ion-item *ngFor="let awaiting of awaitingContacts">
+        <ion-avatar item-start>
+          <img src="http://www.top-madagascar.com/assets/images/admin/user-admin.png">
+        </ion-avatar>
+      <h2>{{awaiting.username}}</h2>
+      <p>Would like to connect with you</p>
+      <button (click)="interactRequest(awaiting.user_id, awaiting.username)" ion-button color="secondary">Answer request</button>
+      <button (click)="viewFlow(awaiting.met_by_post)" ion-button color="dark" clear>View Flow</button>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list *ngIf="myContacts.length > 0">
+    <ion-list-header>
+      Recent Conversations
+    </ion-list-header>
+    <ion-item *ngFor="let contact of myContacts" (click)="openChat(contact.user_id, contact.username)">
+      <ion-avatar item-start>
+        <img src="http://www.top-madagascar.com/assets/images/admin/user-admin.png">
+      </ion-avatar>
+      <h2>{{contact.username}}</h2>
+      <p>{{contact.latest_message}}</p>
+    </ion-item>
+  </ion-list>
+
+    <ion-list inset *ngIf="postActivity.length > 0 || commentActivity.length > 0">
+      <ion-list-header>
+        Recent activity
+        <ion-segment (change)="activitySegment(activityBySegement)" [(ngModel)]="activityBySegement">
+          <ion-segment-button value="posts">
+            Your posts
+          </ion-segment-button>
+          <ion-segment-button value="comments">
+            Your comments
+          </ion-segment-button>
+        </ion-segment>
+      </ion-list-header>
+
+      <div *ngIf="activityBySegement === 'posts'">
+        <div  *ngFor="let post of postActivity">
+          <button (click)="viewFlow(post.post_id)" ion-item >
+            You posted in the flow
+            <br>
+            <ion-note style="font-size: 12px;">
+              {{post.date}}
+            </ion-note>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="activityBySegement === 'comments'">
+        <div *ngFor="let comment of commentActivity">
+          <button (click)="viewFlow(comment.post_id)" ion-item>
+            You commented on a post
+            <br>
+            <ion-note style="font-size: 12px;">
+              {{comment.date}}
+            </ion-note>
+          </button>
+        </div>
+      </div>
+
+
+  </ion-list>
+
+
+</ion-content>

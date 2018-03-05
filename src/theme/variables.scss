@@ -34,26 +34,49 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  white:      #fff,
+  primary:    #E57373,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  main:       #880E4F
 );
+
+$main: #E57373;
+
+
+
+// #4DB6AC; teal
+// #B388FF; purple
+// #64B5F6; blue
+// #EF5350 red
+// #FF5252 red
+// #E57373 red
+// #81C784 green
+
+//#ffcf48d6 // old
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+// toolbar
+$toolbar-ios-title-text-color: #fff;
+$toolbar-ios-button-color: #fff;
 
-
-
-
-// App Material Design Variables
-// --------------------------------------------------
-// Material Design only Sass variables can go here
-
-
+// segment
+// $toolbar-ios-active-color: #fff;
+// $segment-button-ios-text-color: #fff;
+//
+//
+//
+// // App Material Design Variables
+// // --------------------------------------------------
+// // Material Design only Sass variables can go here
+//
+// $segment-button-md-text-color-activated: $main;
+// $segment-button-md-border-color-activated: $main;
 
 
 // App Windows Variables

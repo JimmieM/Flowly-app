@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Notifications</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher *ngIf="userInformation._logged_in" (ionRefresh)="updateNotifications($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list inset>
+    <div *ngIf="!userInformation._logged_in">
+      <button ion-item [navPush]="LoginPage">
+        Login or create an account to manage your notifications
+      </button>
+    </div>
+
+    <div *ngIf="emptyNotifications">
+      <button ion-item>
+        You have no notifications
+      </button>
+    </div>
+
+    <div *ngFor="let notification of notifications">
+      <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 1">
+        {{notification.notification_content}}
+        <br>
+        <ion-note style="font-size: 12px;">
+          {{notification.notification_date}}
+        </ion-note>
+
+      </button>
+      <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 0" style="background: #ffe8a6;">
+        {{notification.notification_content}}
+        <br>
+        <ion-note style="font-size: 12px;">
+          {{notification.notification_date}}
+        </ion-note>
+      </button>
+    </div>
+</ion-list>
+</ion-content>

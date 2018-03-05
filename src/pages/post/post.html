@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{topic_name}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-spinner style="width:100%;" text-center *ngIf="!finishedLoading" name="dots"></ion-spinner>
+
+  <ion-card>
+    <ion-card-content>
+      {{post.post_content}}
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button [disabled]="postInteractions.disableInteractionBtn(post.post_id)" (click)="postInteractions.like('post', post.post_id, post.post_id)" ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{post.post_likes}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button [disabled]="postInteractions.disableInteractionBtn(post.post_id)" (click)="postInteractions.islike('post', post.post_id, post.post_id)" ion-button icon-left clear small>
+          <ion-icon name="thumbs-down"></ion-icon>
+          <div>{{post.post_dislikes}}</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          {{post.post_date}}
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <hr>
+
+  <div *ngFor="let comment of post.post_comments">
+    <ion-card-content>
+      {{comment.comment_content}}
+      <br>
+      <ion-note>
+        {{comment.comment_date}}
+      </ion-note>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button [disabled]="commentInteractions.disableInteractionBtn(comment.comment_id)" (click)="commentInteractions.like('comment', comment.comment_id, post.post_id)" ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{comment.comment_likes}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button [disabled]="commentInteractions.disableInteractionBtn(comment.comment_id)" (click)="commentInteractions.dislike('comment', comment.comment_id, post.post_id)" ion-button icon-left clear small>
+          <ion-icon name="thumbs-down"></ion-icon>
+          <div>{{comment.comment_dislikes}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button (click)="createContact(comment.comment_user_id)" ion-button icon-left clear small>
+          <ion-icon name="chatboxes"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <div>
+        <input style="width: 100%;
+        background-color: transparent;
+        border: none;" [(ngModel)]="comment" type="text" value="" (ngModelChange)="commentInput($event)" placeholder="It's a beautiful day outside!"/>
+      </div>
+    </ion-item>
+
+    <ion-buttons right>
+      <button [disabled]="!messageSend" (click)="postComment()" style="font-size: 3.4rem;" ion-button clear>
+        <ion-icon name='send' style="color:white;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

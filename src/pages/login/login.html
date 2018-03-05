@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input [(ngModel)]="username" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [(ngModel)]="password" type="password"></ion-input>
+    </ion-item>
+
+    <div padding>
+      <button [disabled]="disableBtn" (click)="signIn()" [disabled]="username === '' || password === ''" class="btn-yellow" ion-button full block>Sign in</button>
+      <p text-center>or</p>
+      <button (click)="goToSignup()" color="light" clear ion-button full>Create an account</button>
+    </div>
+
+  </ion-list>
+
+</ion-content>

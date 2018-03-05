@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{profile_username}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-spinner style="width:100%;" text-center *ngIf="loading" name="dots"></ion-spinner>
+
+
+  <ion-card>
+  <img style="max-width:60%; margin: 0 auto;" src="http://www.top-madagascar.com/assets/images/admin/user-admin.png"/>
+  <ion-card-content>
+    <ion-card-title text-center>
+      {{profile_username}}
+      </ion-card-title>
+    <p>
+
+    </p>
+  </ion-card-content>
+
+  <ion-row no-padding>
+
+    <button ion-button clear small block color="danger" icon-start>
+      <ion-icon name='heart'></ion-icon>
+      {{profile.user_thanks}} thanks
+    </button>
+
+    <button ion-button clear small block color="danger" icon-start>
+      <ion-icon name='calendar'></ion-icon>
+      met {{profile.contacts_since}}
+    </button>
+
+    <button ion-button clear small block color="danger" icon-start>
+      <ion-icon name='share-alt'></ion-icon>
+      Met in flow
+    </button>
+  </ion-row>
+
+<ion-row no-padding>
+
+    <ion-col>
+      <button ion-button small color="warning" icon-start>
+        <ion-icon name='remove-circle'></ion-icon>
+        Remove contact
+      </button>
+    </ion-col>
+    <ion-col text-center>
+      <button ion-button  small color="danger" icon-start>
+        <ion-icon name='flag'></ion-icon>
+        Report user
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-card>
+
+</ion-content>

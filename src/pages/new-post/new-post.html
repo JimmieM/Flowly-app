@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{topic_name}}
+    </ion-title>
+
+    <ion-buttons end>
+      <button disabled={{enable_send_button}} style="font-size: 3.4rem;" ion-button clear (click)="sendPost()">
+        <ion-icon name='send' style="color:white;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-textarea style="height: 100%;" [(ngModel)]="post_content" placeholder=" What's on your mind?"></ion-textarea>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p style="color:white;">Topic: <span style="font-weight:bold;">{{topic_name}}</span></p>
+    <ion-buttons end>
+      <button style="color:white;" ion-button clear (click)="selectLocation()">
+        <span *ngIf="post_by === null || undefined">Select a location</span>
+        <span *ngIf="post_by !== null || undefined">{{post_by__text}}</span>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

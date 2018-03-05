@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list no-border *ngIf="loggedIn">
+    <ion-list-header>
+      Privacy
+    </ion-list-header>
+    <ion-item >
+      <ion-toggle [(ngModel)]="showNameInFlow" (ionChange)="_showNameInFlow()" checked="showNameInFlow"></ion-toggle>
+      <ion-label>
+        Show me in the flow for my contacts
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list *ngIf="loggedIn">
+
+    <ion-list-header>
+      Account
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>
+        Email
+      </ion-label>
+      <button item-end ion-button clear (click)="changeEmail()">
+        Edit
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Password
+      </ion-label>
+      <button item-end ion-button clear (click)="changePassword()">
+        Edit
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <button item-start ion-button block color="primary" (click)="logout()">
+        Logout
+      </button>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

@@ -1,3 +1,36 @@
 page-home {
 
 }
+
+.segment-md .segment-button {
+  color: white !important;
+}
+
+.segment-button.segment-activated {
+  border-color: white !important;
+}
+
+ion-card-content p {
+  font-size: 10px !important;
+}
+
+$toolbar-md-active-color:                 $main;
+$toolbar-md-inactive-color:               #fff;
+$segment-button-md-text-color-activated:  #fff;
+
+
+// IOS
+//$toolbar-ios-active-color: #fff;
+$segment-button-ios-text-color: #fff;
+
+$segment-button-ios-background-color-activated: #fff;
+$toolbar-ios-active-color: $main;
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+$segment-button-md-text-color-activated: $main;
+$segment-button-md-border-color-activated: $main;
