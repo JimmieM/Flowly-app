@@ -25,7 +25,7 @@ export class UserProfilePage {
 
   profile = [];
 
-  loading: boolean = true; // show loading..
+  loading: boolean = true; // show loading..∏
 
 
   constructor(
@@ -45,7 +45,7 @@ export class UserProfilePage {
   }
 
   public removeContact() {
-    
+
   }
 
   public loadProfile() {

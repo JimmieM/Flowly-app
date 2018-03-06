@@ -2,7 +2,7 @@
   <ion-navbar hideBackButton>
     <ion-title>Profile</ion-title>
     <ion-buttons end>
-      <button *ngIf="loggedIn === 'true'" ion-button clear (click)="goToSettings()">
+      <button *ngIf="userInformation._logged_in" ion-button clear (click)="goToSettings()">
         <ion-icon style="color:white;" name="cog"></ion-icon>
       </button>
     </ion-buttons>
@@ -19,12 +19,14 @@
       <ion-avatar item-start>
         <img src="http://www.top-madagascar.com/assets/images/admin/user-admin.png">
       </ion-avatar>
-      <h2 *ngIf="loggedIn === 'true'">{{username}}</h2>
+      <h2 *ngIf="userInformation._logged_in">{{userInformation._username}}</h2>
       <p>You're on flow</p>
 
-      <button *ngIf="loggedIn !== 'true'" (click)="goToLoginPage()" ion-button color="primary">Login to chat with others</button>
+      <button *ngIf="!userInformation._logged_in" (click)="goToLoginPage()" ion-button color="primary">Login to chat with others</button>
     </ion-item>
   </ion-card>
+
+  <ion-spinner style="width:100%;" text-center *ngIf="!finishedLoading" name="dots"></ion-spinner>
 
   <ion-list *ngIf="awaitingContacts.length > 0 || requesteeContacts.length > 0">
     <ion-list-header>
@@ -97,8 +99,5 @@
         </div>
       </div>
 
-
   </ion-list>
-
-
 </ion-content>

@@ -11,6 +11,10 @@
   </ion-refresher>
 
   <ion-list inset>
+
+    <ion-spinner style="width:100%;" text-center *ngIf="!finishedLoading" name="dots"></ion-spinner>
+
+
     <div *ngIf="!userInformation._logged_in">
       <button ion-item [navPush]="LoginPage">
         Login or create an account to manage your notifications

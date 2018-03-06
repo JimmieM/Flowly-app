@@ -13,6 +13,8 @@ import { SettingsPage } from '../settings/settings';
 import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
+import { UserInformation } from '../../app/user_information';
+
 import { Globals } from '../../app/globals';
 
 import { LoginPage } from '../login/login';
@@ -24,16 +26,14 @@ import { LoginPage } from '../login/login';
 })
 export class ProfilePage {
 
-  username: string;
-  loggedIn: string;
-  user_id: number;
-
   myContacts;
   awaitingContacts;
   requesteeContacts;
 
   postActivity;
   commentActivity;
+
+  finishedLoading: boolean = false;
 
 
   activityBySegement: string = 'posts'; // defines the segement value
@@ -45,10 +45,8 @@ export class ProfilePage {
     public toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
-    public globals: Globals) {
-      this.username = localStorage.getItem('username');
-      this.loggedIn = localStorage.getItem('loggedIn');
-      this.user_id = Number.parseInt(localStorage.getItem('userId'));
+    public globals: Globals,
+    public userInformation: UserInformation) {
 
       this.myContacts = [];
       this.awaitingContacts = [];
@@ -94,8 +92,8 @@ export class ProfilePage {
     headers.append('Content-Type', 'application/json');
 
     let body = {
-      username: this.username,
-      user_id: this.user_id,
+      username: this.userInformation._username,
+      user_id: this.userInformation._user_id,
       contact_user_id: contact_user_id,
       answer: answer
     };
@@ -166,14 +164,13 @@ export class ProfilePage {
   }
 
   public updateProfileView(refresh, refresher) {
-    this.username = localStorage.getItem('username');
-    this.loggedIn = localStorage.getItem('loggedIn');
-    this.user_id = Number.parseInt(localStorage.getItem('userId'));
+    if(this.userInformation._logged_in) {
 
-    if(this.loggedIn === "true") {
       this.getContacts();
       this.getActivity();
+  
     }
+    this.finishedLoading = true;
 
     if(refresh) {
       setTimeout(() => {
@@ -183,12 +180,12 @@ export class ProfilePage {
   }
 
   public getActivity() {
-    if(this.loggedIn === 'true') {
+    if(this.userInformation._logged_in) {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
       let body = {
-        user_id: this.user_id,
+        user_id: this.userInformation._user_id
       };
 
       this.http.post(this.globals._https_uri + 'user/getUserActivity', JSON.stringify(body), {headers:headers})
@@ -206,12 +203,12 @@ export class ProfilePage {
 
   public getContacts() {
 
-    if(this.loggedIn === 'true') {
+    if(this.userInformation._logged_in) {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
       let body = {
-        user_id: this.user_id,
+        user_id: this.userInformation._user_id
       };
 
       console.log(body)
@@ -244,9 +241,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    this.username = localStorage.getItem('username');
-    this.loggedIn = localStorage.getItem('loggedIn');
-    this.user_id = Number.parseInt(localStorage.getItem('userId'));
+    this.userInformation.refresh();
 
     this.myContacts = [];
     this.awaitingContacts = [];

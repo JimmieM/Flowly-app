@@ -44,13 +44,6 @@ List all localStorage variables somewhere,and doucment!
     <ion-title>
         Pick a topic
     </ion-title>
-
-    <ion-buttons start>
-      <button ion-button clear (click)="dismiss()">
-        <span ion-text color="white" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
-      </button>
-    </ion-buttons>
     <ion-buttons end>
       <button clear ion-button full (click)="newTopicAlert()">
         <ion-icon color="light" name="add"></ion-icon>
@@ -66,13 +59,24 @@ List all localStorage variables somewhere,and doucment!
   <ion-spinner style="width:100%;" text-center *ngIf="!finishedLoading" name="dots"></ion-spinner>
   <p *ngIf="viewing_title !== ''" style="color: #c7c7c7;" text-center>{{viewing_title}}</p>
   <ion-list>
-    <button ion-item *ngFor="let item of topics_temp | slice:0:15; let i=index" (click)="pickTopic(item.topic_id, item.topic_name)">
+    <button (click)="pickTopic(item.topic_id, item.topic_name)" ion-item *ngFor="let item of topics_temp | slice:0:15; let i=index">
       <h2>{{item.topic_name}}</h2>
       <ion-badge item-end>{{item.topic_likes}}</ion-badge>
       <ion-badge item-end>{{item.topic_dislikes}}</ion-badge>
     </button>
   </ion-list>
 </ion-content>
+
+<ion-footer class="footer-small">
+
+  <ion-toolbar>
+    <ion-buttons text-center>
+      <button ion-button clear style="font-size: 3rem; padding-right:5%;" (click)="dismiss()">
+        <ion-icon name='md-close' style="color:white;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
 `
 })
 export class ModalContentPage {
@@ -588,6 +592,7 @@ export class HomePage {
     modal.onDidDismiss(() => {
      // this.userInformation._topic_name = localStorage.getItem('standardTopicName'); // reload variable
      // this.userInformation._topic_id = Number.parseInt(localStorage.getItem('standardTopicId')); // reload variable
+     this.userInformation.refresh();
 
      // only if user changed topic, reload.
      if(current_topic !== this.userInformation._topic_id) {
@@ -681,6 +686,8 @@ export class HomePage {
        showCloseButton: true
      });
      toast.present();
+
+     this.userInformation.refresh();
   }
 
   public disableBookmarkBtn(topic_id) {

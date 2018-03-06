@@ -28,9 +28,11 @@ import 'rxjs/add/operator/map';
 export class NotificationsPage {
 
   loginPage;
-  emptyNotifications: boolean = false;
+  emptyNotifications: boolean = true;
 
   notifications;
+
+  finishedLoading: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -52,6 +54,7 @@ export class NotificationsPage {
     this.notifications = [];
 
     if(this.userInformation._logged_in) {
+      this.finishedLoading = false;
       this.getNotifications();
     }
   }
@@ -94,7 +97,7 @@ export class NotificationsPage {
     this.http.post(this.globals._https_uri + 'user/notifications/GetNotifications', JSON.stringify(body), {headers:headers})
     .map(res => res.json())
     .subscribe(data => {
-      console.log(data)
+      this.finishedLoading = true;
       if(data.success) {
         this.emptyNotifications = false;
         this.notifications = data.notification_response;
