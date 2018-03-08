@@ -16,6 +16,8 @@ export class UserInformation {
   _locality: string; // where you are (city)
   _country: string; // which country your in.
 
+  _standard_postby: string; // on post
+
   constructor() {
     this.refresh();
   }
@@ -28,6 +30,8 @@ export class UserInformation {
 
     this._topic_name = localStorage.getItem('standardTopicName'); // reload variable
     this._topic_id = Number.parseInt(localStorage.getItem('standardTopicId')); // reload variable
+
+    this._standard_postby = localStorage.getItem('standardPostBy') || null;
   }
 
   public isLoggedIn() {

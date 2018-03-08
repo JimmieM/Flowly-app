@@ -8,7 +8,7 @@
 
 
 <ion-content>
-  <ion-list no-border *ngIf="loggedIn">
+  <!-- <ion-list no-border *ngIf="loggedIn">
     <ion-list-header>
       Privacy
     </ion-list-header>
@@ -18,7 +18,7 @@
         Show me in the flow for my contacts
       </ion-label>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
 
   <ion-list *ngIf="loggedIn">
@@ -27,7 +27,7 @@
       Account
     </ion-list-header>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label>
         Email
       </ion-label>
@@ -43,7 +43,7 @@
       <button item-end ion-button clear (click)="changePassword()">
         Edit
       </button>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item>
       <button item-start ion-button block color="primary" (click)="logout()">

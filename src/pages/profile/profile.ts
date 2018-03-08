@@ -168,7 +168,7 @@ export class ProfilePage {
 
       this.getContacts();
       this.getActivity();
-  
+
     }
     this.finishedLoading = true;
 
@@ -221,6 +221,13 @@ export class ProfilePage {
           this.myContacts = data.contacts;
           this.awaitingContacts = data.contacts_awaiting;
           this.requesteeContacts = data.contacts_requests;
+
+          // sort after latest message date..
+          this.myContacts = this.myContacts.sort((a: any, b: any) =>
+              new Date(b.latest_message_object.latest_message_date).getTime() - new Date(a.latest_message_object.latest_message_date).getTime()
+
+          );
+
         } else {
           console.log("Couldnt find contacts")
         }

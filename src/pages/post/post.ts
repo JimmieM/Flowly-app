@@ -88,15 +88,29 @@ export class PostPage {
         this.post = data.flow_response_dynamic[0];
         console.log(this.post)
       } else {
-        let alert = this.alertCtrl.create({
-           title: 'Could not load post',
-           subTitle: data.message,
-           buttons: ['OK']
-         });
-         alert.present();
+        let toast = this.toastCtrl.create({
+          message: data.message,
+          duration: 3000,
+          position: 'top',
+          showCloseButton: true
+        });
+        toast.present();
       }
     })
   }
+
+  //comment funcs.
+  updateVote(like, dislike, id) {
+
+  for(let i = 0; i < this.post['post_comments'].length; i++) {
+    let comment = this.post['post_comments'][i];
+    if(comment['comment_id'] === id) {
+
+      this.post['post_comments'][i]['comment_likes'] += like;
+      this.post['post_comments'][i]['comment_dislikes'] += dislike;
+    }
+  }
+}
 
   public createContact(contact_id) {
     let toast;
@@ -226,7 +240,6 @@ export class PostPage {
     .map(res => res.json())
     .subscribe(data => {
       console.log(data)
-      this.messageSend = true; // unlock
       if(data.success) {
           this.channel.publish('update', 'true');
 

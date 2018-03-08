@@ -237,15 +237,15 @@ export class ModalContentPage {
       let toast;
       if(data.success) {
         toast = this.toastCtrl.create({
-           message: 'Your topic has been created!.',
-           duration: 3000,
-           position: 'bottom'
+           message: 'Your topic has been created!',
+           duration: 2000,
+           position: 'top'
          });
       } else if(!data.success && !data.error) {
         toast = this.toastCtrl.create({
-           message: 'This topic already exist',
-           duration: 3000,
-           position: 'bottom'
+           message: 'This topic already exist.',
+           duration: 2000,
+           position: 'top'
          });
 
       } else if(!data.success && data.error) {
@@ -413,14 +413,14 @@ export class HomePage {
     this.userInformation.refresh();
 
 
-    let watch = this.geolocation.watchPosition();
-    watch.subscribe((data) => {
-      /*
-      TODO: call maps API again if cords is very different!
-      */
-     console.log(data.coords.longitude);
-     console.log(data.coords.latitude);
-    });
+    // let watch = this.geolocation.watchPosition();
+    // watch.subscribe((data) => {
+    //   /*
+    //   TODO: call maps API again if cords is very different!
+    //   */
+    //  console.log(data.coords.longitude);
+    //  console.log(data.coords.latitude);
+    // });
   }
 
   ionViewDidLoad() {
@@ -436,11 +436,13 @@ export class HomePage {
 
         this.pushNotification.initPushNotification();
 
+        console.log(this.randomLoc())
+
         this.geolocation.getCurrentPosition().then((resp) => {
 
         this.setPostsBy();
 
-         this.getLocation(resp.coords.latitude, resp.coords.longitude);
+        this.getLocation(resp.coords.latitude, resp.coords.longitude);
 
         }).catch((error) => {
           console.log('Error getting location: ' + error.message);
@@ -456,6 +458,16 @@ export class HomePage {
 
       });
     }
+  }
+
+  private randomLoc() {
+    var num = Math.random()*180;
+     var posorneg = Math.floor(Math.random());
+     if (posorneg == 0)
+     {
+         num = num * -1;
+     }
+     return num;
   }
 
   private beta_input_identifier(country, locality) {
@@ -626,49 +638,86 @@ export class HomePage {
         let postsBy = this.posts_by; // get local variable of where to pick posts from.
         let hasTopic = localStorage.getItem('standardTopicId');
 
+        for (var ac = 0; ac < result[0].address_components.length; ac++) {
+            var component = result[0].address_components[ac];
 
-        for (let i = 0; i < result.length; i++) {
-            for (let j = 0; j < result[i].types.length; j++) {
-                if(result[i].types[j] == 'postal_town') {
-                  this.globals._locality = result[i].formatted_address; // set global variable.
-                }
+            switch(component.types[0]) {
+                case 'locality':
+                    console.log("Locality: " + component.long_name)
+                    this.globals._locality = component.long_name;
+                    break;
+                case 'administrative_area_level_1':
+                    if(this.globals._locality === undefined) {
+                      this.globals._locality = component.short_name;
+                    }
+                    console.log("area 1 " + component.short_name)
+                    break;
+                case 'country':
+                console.log("Country: " + component.long_name)
+                    ///storableLocation.country = ;
+                    this.globals._country = component.long_name;
 
-                if(result[i].types[j] == 'country') {
-                  this.globals._country = result[i].formatted_address; // set global variable.
-                }
-
-                if(this.globals._country && this.globals._locality !== null || undefined) {
-                  console.log("Done!")
-                  break;
-                }
+                    console.log("ISO: "  + component.short_name)
+                    //storableLocation.registered_country_iso_code = component.short_name;
+                    break;
             }
-        }
+        };
 
-        if(this.globals._country !== undefined || this.globals._locality !== undefined) {
-          console.log(localStorage.getItem('betaGeoLoc_answered'));
-          if(localStorage.getItem('betaGeoLoc_answered') !== 'true') {
-            this.beta_input_identifier(this.globals._country, this.globals._locality);
-          }
-        }
+        // OLD CODE:
 
-        if(localStorage.getItem('betaGeoLoc_answered') === 'true') {
-          // load the flow, or pick a topic first..
-          if(hasTopic === null) {
-            this.viewTopicsModal();
-          } else {
-            this.getFlow(this.flow);
-          }
-        }
 
+        //
+        // for (let i = 0; i < result.length; i++) {
+        //     for (let j = 0; j < result[i].types.length; j++) {
+        //
+        //         // each town doesnt have a postal_town. A solution for this is below.
+        //         if(result[i].types[j] == 'postal_town') {
+        //           this.globals._locality = result[i].formatted_address; // set global variable.
+        //         }
+        //
+        //         // a country is always provided by Google Maps API
+        //         if(result[i].types[j] == 'country') {
+        //           this.globals._country = result[i].formatted_address; // set global variable.
+        //         }
+        //
+        //         // check if both variables are filled.
+        //         if(this.globals._country !== undefined
+        //           &&
+        //           this.globals._locality !== undefined
+        //         ) {
+        //
+        //           //console.log(this.globals._locality)
+        //           console.log("Done!")
+        //           break;
+        //         } else {
+        //           // current city doesnt have a postal_town
+        //
+        //           // life saver for cities without a postal_town. Use locality as backup
+        //           if(result[i].types[j] == 'locality') {
+        //             // assign, then break the loop.
+        //             this.globals._locality = result[i].formatted_address; // set global variable.
+        //             break;
+        //           } else if(result[i].types[j] == 'postal_code') {
+        //
+        //           }
+        //         }
+        //     }
+        // }
+
+        // load the flow, or pick a topic first, depending on if user has opened the app before.
+        if(hasTopic === null) {
+          this.viewTopicsModal();
+        } else {
+          this.getFlow(this.flow);
+        }
       } else {
         let toast = this.toastCtrl.create({
-           message: 'Failed to get current position!',
+           message: 'Failed to get your position!',
            duration: 3000,
            position: 'bottom'
          });
          toast.present();
       }
-
     })
   }
 
@@ -743,7 +792,7 @@ export class HomePage {
         {
           text: 'Locate my position',
           handler: () => {
-            this.ionViewWillEnter();
+            this.ionViewDidLoad();
           }
         },{
           text: 'Cancel',

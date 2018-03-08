@@ -25,7 +25,7 @@ export class NewPostPage {
   post_by: string;
   post_by__text:string;
 
-  enable_send_button: boolean;
+  disable_send_button: boolean;
 
   post_content: string;
 
@@ -47,6 +47,16 @@ export class NewPostPage {
     console.log('ionViewDidLoad NewPostPage');
   }
 
+  postInput(value) {
+    console.log(value.length)
+    if(value.length > 0) {
+      this.disable_send_button = false;
+      console.log("true")
+    } else {
+      this.disable_send_button = true;
+    }
+  }
+
   selectLocation() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Select geographical point to post in',
@@ -56,19 +66,22 @@ export class NewPostPage {
           handler: () => {
             this.post_by = 'none';
             this.post_by__text = 'All';
+            this.disable_send_button = true;
           }
         },
         {
-          text: this.globals._country,
+          text: this.globals._country || 'Getting position...',
           handler: () => {
             this.post_by = 'country';
             this.post_by__text = this.globals._country;
+            this.disable_send_button = true;
           }
         },{
-          text: this.globals._locality,
+          text: this.globals._locality || 'Getting position...',
           handler: () => {
             this.post_by = 'locality';
             this.post_by__text = this.globals._locality;
+            this.disable_send_button = true;
           }
         },{
           text: 'Cancel',
@@ -82,8 +95,10 @@ export class NewPostPage {
 
   sendPost() {
     if(this.post_by !== null) {
-      if((this.globals._country === null || undefined) || (this.globals._locality === null || undefined)) {
-        if(this.post_content !== "" || this.post_content !== undefined) {
+      if((this.globals._country !== null) || (this.globals._locality !== null)) {
+        if(this.post_content !== undefined) {
+
+          console.log(this.post_content)
           let headers = new Headers();
 
           headers.append('Content-Type', 'application/json');
@@ -119,7 +134,8 @@ export class NewPostPage {
           let toast = this.toastCtrl.create({
              message: 'Flow can not be empty',
              duration: 3000,
-             position: 'top'
+             position: 'top',
+             showCloseButton: true
            });
            toast.present();
         }
@@ -127,7 +143,8 @@ export class NewPostPage {
         let toast = this.toastCtrl.create({
            message: 'Failed to get your location',
            duration: 3000,
-           position: 'top'
+           position: 'top',
+           showCloseButton: true
          });
          toast.present();
       }
@@ -135,7 +152,8 @@ export class NewPostPage {
       let toast = this.toastCtrl.create({
          message: 'Please select a location',
          duration: 3000,
-         position: 'top'
+         position: 'top',
+         showCloseButton: true
        });
        toast.present();
     }

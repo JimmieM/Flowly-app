@@ -62,6 +62,8 @@ export class PushNotification {
 
       pushObject.on('notification').subscribe((data: any) => {
         console.log('message -> ' + data.message);
+
+
         console.log(data.message);
         //if user using app and push notification comes
         if (data.additionalData.foreground) {

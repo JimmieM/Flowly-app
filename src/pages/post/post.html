@@ -49,20 +49,26 @@
 
     <ion-row>
       <ion-col>
-        <button [disabled]="commentInteractions.disableInteractionBtn(comment.comment_id)" (click)="commentInteractions.like('comment', comment.comment_id, post.post_id)" ion-button icon-left clear small>
+        <button [disabled]="commentInteractions.disableInteractionBtn(comment.comment_id)" (click)="commentInteractions.like('comment', comment.comment_id, post.post_id); updateVote(1,0,comment.comment_id);" ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
           <div>{{comment.comment_likes}}</div>
         </button>
       </ion-col>
       <ion-col>
-        <button [disabled]="commentInteractions.disableInteractionBtn(comment.comment_id)" (click)="commentInteractions.dislike('comment', comment.comment_id, post.post_id)" ion-button icon-left clear small>
+        <button [disabled]="commentInteractions.disableInteractionBtn(comment.comment_id)" (click)="commentInteractions.dislike('comment', comment.comment_id, post.post_id); updateVote(0,1,comment.comment_id);" ion-button icon-left clear small>
           <ion-icon name="thumbs-down"></ion-icon>
           <div>{{comment.comment_dislikes}}</div>
         </button>
       </ion-col>
       <ion-col>
-        <button (click)="createContact(comment.comment_user_id)" ion-button icon-left clear small>
-          <ion-icon name="chatboxes"></ion-icon>
+        <!-- if you're not the commenter. -->
+        <button *ngIf="comment.comment_user_id !== userInformation._user_id" (click)="createContact(comment.comment_user_id)" ion-button icon-left clear small>
+          <ion-icon name="person-add"></ion-icon>
+        </button>
+
+        <!-- if you're the commenter. -->
+        <button *ngIf="comment.comment_user_id === userInformation._user_id" [disabled]="true" ion-button icon-left clear small>
+          You
         </button>
       </ion-col>
     </ion-row>

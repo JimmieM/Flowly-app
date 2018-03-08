@@ -73,7 +73,6 @@ export class TopicVotes {
     return JSON.parse(this.votes);
   }
 
-
   public saveVote(topic_id) {
 
     let _likes = JSON.parse(this.votes) || [];
@@ -84,7 +83,4 @@ export class TopicVotes {
     this.update();
 
   }
-
-
-
 }

@@ -5,7 +5,7 @@ import { UserInformation } from '../user_information';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { Http, Headers }     from '@angular/http';
-import { AlertController } from 'ionic-angular';
+import { AlertController, ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
@@ -28,7 +28,8 @@ export class Flow {
   constructor(
     private globals:Globals,
     private userInformation: UserInformation,
-    private http: Http) {
+    private http: Http,
+    private toastCtrl: ToastController) {
       this.topic_id = Number.parseInt(localStorage.getItem('standardTopicId')) || 0;
     }
 
@@ -50,20 +51,27 @@ export class Flow {
 
     console.log(body);
 
-    const resp = await this.http.post(this.globals._https_uri + 'flow', JSON.stringify(body), {headers:headers}).toPromise();
-    let data = resp.json();
+    try {
+      const resp = await this.http.post(this.globals._https_uri + 'flow', JSON.stringify(body), {headers:headers}).toPromise();
+      let data = resp.json();
 
-    if(data.success) {
-      data.flow_response_normal === null ? this.flow_content_empty['normal'] = true:this.flow_content_empty['normal'] = false;
-      data.flow_response_popular === null ? this.flow_content_empty['popular'] = true: this.flow_content_empty['popular'] = false;
-      data.flow_response_unpopular === null  ? this.flow_content_empty['unpopular'] = true:this.flow_content_empty['unpopular'] = false;
+      if(data.success) {
+        data.flow_response_normal === null ? this.flow_content_empty['normal'] = true:this.flow_content_empty['normal'] = false;
+        data.flow_response_popular === null ? this.flow_content_empty['popular'] = true: this.flow_content_empty['popular'] = false;
+        data.flow_response_unpopular === null  ? this.flow_content_empty['unpopular'] = true:this.flow_content_empty['unpopular'] = false;
 
-      this.flow_content['normal'] = data.flow_response_normal
-      this.flow_content['popular'] = data.flow_response_popular
-      this.flow_content['unpopular'] = data.flow_response_unpopular
+        this.flow_content['normal'] = data.flow_response_normal
+        this.flow_content['popular'] = data.flow_response_popular
+        this.flow_content['unpopular'] = data.flow_response_unpopular
+      }
+      return data.success;
+    } catch(e) {
+      let toast = this.toastCtrl.create({
+         message: "Failed to update flow, try again!",
+         duration: 3000,
+         position: 'top'
+       });
+       toast.present();
     }
-    return data.success;
   }
-
-
 }

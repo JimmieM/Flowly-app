@@ -7,7 +7,7 @@ import { AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { App } from 'ionic-angular';
 import { Content } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ActionSheetController } from 'ionic-angular';
 import * as Ably from 'ably';
 import { Globals } from '../../app/globals';
 import { UserInformation } from  '../../app/user_information';
@@ -45,7 +45,8 @@ export class ChatPage {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public globals: Globals,
-    public userInformation: UserInformation)
+    public userInformation: UserInformation,
+    private actionSheetCtrl: ActionSheetController)
   {
     this.messageSend = false;
     this.ably = new Ably.Realtime('iJs-JQ.THfLcg:9zSDnj4Yh9n1xdu9');
@@ -58,6 +59,25 @@ export class ChatPage {
     this.scrollToBottom();
 
     this.chats = [];
+  }
+
+  public bubbleClick(user_id) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: this.chat_username,
+      buttons: [
+        {
+          text: 'View profile',
+          handler: () => {
+            this.openProfile();
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {}
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   public openProfile() {

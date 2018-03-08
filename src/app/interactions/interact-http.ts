@@ -43,8 +43,6 @@ export class HTTPInteraction {
     .subscribe(data => {
       console.log(data)
       if(data.success) {
-
-
         if(table === 'post') {
           for (let i = 0; i < this.flowModule.flow_content[this.userInformation._flow_state].length; i++) {
 
@@ -58,7 +56,9 @@ export class HTTPInteraction {
             }
           }
         } else {
-          //this.channel.publish('update', 'true'); TODO fix
+
+
+          // this.channel.publish('update', 'true'); //TODO fix
           // for(let i = 0; i < this.postPage.post['post_comments'].length; i++) {
           //   let comment = this.postPage.post['post_comments'][i];
           //   if(comment['comment_id'] === id) {
@@ -66,6 +66,8 @@ export class HTTPInteraction {
           //     this.postPage.post['post_comments'][i]['post_dislikes'] += dislike;
           //   }
           // }
+
+
         }
       }
     })

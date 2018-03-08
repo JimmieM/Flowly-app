@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      {{topic_name}}
+      {{userInformation._topic_name}}
     </ion-title>
 
     <ion-buttons end>
-      <button disabled={{enable_send_button}} style="font-size: 3.4rem;" ion-button clear (click)="sendPost()">
+      <button style="font-size: 3.4rem;" ion-button clear (click)="sendPost()">
         <ion-icon name='send' style="color:white;"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,11 +20,16 @@
 
 <ion-footer>
   <ion-toolbar>
-    <p style="color:white;">Topic: <span style="font-weight:bold;">{{topic_name}}</span></p>
+    <p style="color:white;">Topic: <span style="font-weight:bold;">{{userInformation._topic_name}}</span></p>
     <ion-buttons end>
-      <button style="color:white;" ion-button clear (click)="selectLocation()">
-        <span *ngIf="post_by === null || undefined">Select a location</span>
-        <span *ngIf="post_by !== null || undefined">{{post_by__text}}</span>
+      <button *ngIf="globals._locality ===  undefined && globals._country === undefined" style="color:white;" ion-button clear>
+        Getting position <ion-spinner style="color:white;" text-center *ngIf="!finishedLoading" name="dots"></ion-spinner>
+      </button>
+
+      <button *ngIf="globals._locality !== undefined" style="color:white;" ion-button clear (click)="selectLocation()">
+
+        <span *ngIf="post_by === null && globals._locality !== undefined">Select a location</span>
+        <span *ngIf="post_by !== null && globals._locality !== undefined">{{post_by__text}}</span>
       </button>
     </ion-buttons>
   </ion-toolbar>

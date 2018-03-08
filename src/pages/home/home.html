@@ -2,6 +2,9 @@
   <ion-navbar hideBackButton>
     <ion-title>
       {{userInformation._topic_name}}
+
+      <span *ngIf="globals._locality !== undefined" style="font-size:10px;"><br>{{globals._locality}}</span>
+      <span *ngIf="globals._locality === undefined" style="font-size:10px;"><br>Getting your position...</span>
     </ion-title>
     <ion-buttons end>
       <button [disabled]="disableBookmarkBtn(userInformation._topic_id)" ion-button clear (click)="bookmarkTopic(userInformation._topic_id)">
@@ -49,6 +52,12 @@
           <div>{{flow.post_dislikes}}</div>
         </button>
       </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="chatboxes"></ion-icon>
+          {{flow.post_comments.length}}
+        </button>
+      </ion-col>
       <ion-col center text-center>
         <ion-note>
           {{flow.post_date}}
@@ -85,6 +94,12 @@
           <div>{{flow.post_dislikes}}</div>
         </button>
       </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="chatboxes"></ion-icon>
+          {{flow.post_comments.length}}
+        </button>
+      </ion-col>
       <ion-col center text-center>
         <ion-note>
           {{flow.post_date}}
@@ -119,6 +134,13 @@
         <button [disabled]="postInteractions.disableInteractionBtn(flow.post_id)" (click)="postInteractions.dislike('post', flow.post_id)" ion-button icon-left clear small>
           <ion-icon name="thumbs-down"></ion-icon>
           <div>{{flow.post_dislikes}}</div>
+        </button>
+      </ion-col>
+
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="chatboxes"></ion-icon>
+          {{flow.post_comments.length}}
         </button>
       </ion-col>
       <ion-col center text-center>
