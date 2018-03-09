@@ -15,6 +15,7 @@ import { App } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 import { ProfilePage } from '../profile/profile';
+import { TermsPage } from '../terms/terms';
 
 import { Globals } from '../../app/globals'
 
@@ -25,18 +26,26 @@ import { Globals } from '../../app/globals'
 })
 export class SignupPage {
 
-  username:string;
-  email: string;
-  password:string;
+  username:string = '';
+  email: string = '';
+  password:string = '';
 
   disableBtn: boolean;
 
-  constructor(public navCtrl: NavController, public http: Http, public alertCtrl: AlertController, public toastCtrl: ToastController, public globals: Globals) {
+  constructor(public navCtrl: NavController,
+    public http: Http,
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController,
+    public globals: Globals) {
     this.disableBtn = false;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
+  }
+
+  viewTerms() {
+    this.navCtrl.push(TermsPage);
   }
 
   createAccount() {

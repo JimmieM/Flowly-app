@@ -3,11 +3,11 @@
 
   <ion-navbar>
     <ion-title>{{chat_username}}</ion-title>
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button (click)="openProfile()">
         <ion-icon name='contact' style="color:white;"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-navbar>
 
 </ion-header>
@@ -24,7 +24,7 @@
         <span style="font-size: 11px; color: #f7afaf;">{{chat.chat_date}}</span>
     </div>
   </div>
-  <div (click)="bubbleClick(userInformation._user_id)" *ngIf="chat.chat_from_id !== userInformation._user_id" class="chat-bubble left">
+  <div *ngIf="chat.chat_from_id !== userInformation._user_id" class="chat-bubble left">
     <div class="message">{{chat.chat_message}}</div>
     <div class="message-detail">
         <span style="font-weight:bold;">{{chat_username}}</span>,

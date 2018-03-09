@@ -48,6 +48,10 @@ export class UserProfilePage {
 
   }
 
+  public metInPost() {
+
+  }
+
   public loadProfile() {
     let headers = new Headers();
 

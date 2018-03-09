@@ -15,6 +15,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage, ModalContentPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { PostPage } from '../pages/post/post';
+import { TermsPage } from '../pages/terms/terms';
 import { NewPostPage } from '../pages/new-post/new-post';
 import { ProfilePage } from '../pages/profile/profile';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
@@ -63,7 +64,8 @@ import { HTTPInteraction } from './interactions/interact-http';
     SettingsPage,
     ModalContentPage,
     SliderPage,
-    UserProfilePage
+    UserProfilePage,
+    TermsPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ import { HTTPInteraction } from './interactions/interact-http';
     SettingsPage,
     ModalContentPage,
     SliderPage,
-    UserProfilePage
+    UserProfilePage,
+    TermsPage
   ],
   providers: [
     StatusBar,
@@ -109,6 +112,7 @@ import { HTTPInteraction } from './interactions/interact-http';
     MyGeoLocation,
     PushNotification,
     Push,
+    TermsPage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

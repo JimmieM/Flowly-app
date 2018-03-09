@@ -20,7 +20,7 @@
     </ion-item>
 
     <div padding>
-      <button [disabled]="disableBtn" (click)="signIn()" [disabled]="username === '' || password === ''" class="btn-yellow" ion-button full block>Sign in</button>
+      <button [disabled]="disableBtn" (click)="signIn()" [disabled]="username === undefined || password === undefined || username === '' || password === ''" class="btn-yellow" ion-button full block>Sign in</button>
       <p text-center>or</p>
       <button (click)="goToSignup()" color="light" clear ion-button full>Create an account</button>
     </div>

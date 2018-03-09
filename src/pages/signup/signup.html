@@ -29,6 +29,10 @@
       <button [disabled]="disableBtn" (click)="createAccount()" [disabled]="username === '' || password === '' || email === ''" class="btn-yellow" ion-button full block>Create</button>
     </div>
 
+    <hr>
+
+    <p text-center>Upon of creating an account you agree to our <br><button (click)="viewTerms()" ion-button clear>terms of service</button></p>
+
   </ion-list>
 
 </ion-content>

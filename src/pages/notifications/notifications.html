@@ -21,7 +21,7 @@
       </button>
     </div>
 
-    <div *ngIf="emptyNotifications">
+    <div *ngIf="emptyNotifications && userInformation.loggedIn">
       <button ion-item>
         You have no notifications
       </button>
@@ -36,7 +36,7 @@
         </ion-note>
 
       </button>
-      <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 0" style="background: #ffe8a6;">
+      <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 0" style="    background: #e5737242;">
         {{notification.notification_content}}
         <br>
         <ion-note style="font-size: 12px;">

@@ -33,6 +33,11 @@
           {{post.post_date}}
         </ion-note>
       </ion-col>
+      <ion-col>
+        <button (click)="reportContent('post',post.id_id)" ion-button icon-left clear small>
+          <ion-icon name="ios-more"></ion-icon>
+        </button>
+      </ion-col>
     </ion-row>
   </ion-card>
 
@@ -69,6 +74,12 @@
         <!-- if you're the commenter. -->
         <button *ngIf="comment.comment_user_id === userInformation._user_id" [disabled]="true" ion-button icon-left clear small>
           You
+        </button>
+      </ion-col>
+
+      <ion-col>
+        <button (click)="reportContent('comment',comment.comment_id)" ion-button icon-left clear small>
+          <ion-icon name="ios-more"></ion-icon>
         </button>
       </ion-col>
     </ion-row>

@@ -32,7 +32,7 @@ export class NotificationsPage {
 
   notifications;
 
-  finishedLoading: boolean = false;
+  finishedLoading: boolean = true;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

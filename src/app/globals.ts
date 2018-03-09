@@ -5,12 +5,14 @@ export class Globals {
   _locality: string; // where you are (city)
   _country: string; // which country your in.
 
-  _prod:boolean = false;
+  _prod:boolean;
 
   _https_uri: string;
   _key: string;
 
   constructor() {
+    this._prod = false;
+
     this._key = 'aadsa--djja33_#11@abd';
     this._https_uri = 'https://anonyflow.azurewebsites.net/api/';
 

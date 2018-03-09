@@ -75,7 +75,7 @@ export class LoginPage {
           localStorage.setItem('userId', data.message);
 
            toast = this.toastCtrl.create({
-             message: 'Welcome back ' + this.username,
+             message: 'Welcome back, ' + this.username,
              duration: 3000,
              position: 'top'
            });
@@ -84,7 +84,7 @@ export class LoginPage {
           this.navCtrl.push(ProfilePage);
       } else {
         toast = this.toastCtrl.create({
-          message: 'Incorrect password and/or username',
+          message: 'Incorrect password or username',
           duration: 3000,
           position: 'top'
         });

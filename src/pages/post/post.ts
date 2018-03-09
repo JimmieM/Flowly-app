@@ -66,6 +66,38 @@ export class PostPage {
     this.userInformation.refresh();
   }
 
+  public reportContent(table, id) {
+    console.log(table, ' : ' , id);
+
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+
+    let body = {
+      user_id: this.userInformation._user_id,
+      table_id: id,
+      table: table
+    };
+
+    console.log(body)
+
+    this.http.post(this.globals._https_uri + 'abuse/report', JSON.stringify(body), {headers:headers})
+    .map(res => res.json())
+    .subscribe(data => {
+
+      console.log(data);
+      let toast = this.toastCtrl.create({
+        message: 'Your report has been filed!',
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
+      });
+      toast.present();
+
+
+    })
+  }
+
   public loadPost(post_id) {
     let headers = new Headers();
 
