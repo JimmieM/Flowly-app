@@ -7,7 +7,7 @@ import { AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { App } from 'ionic-angular';
 import { Content } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { ToastController, ActionSheetController } from 'ionic-angular';
 import * as Ably from 'ably';
 import { Globals } from '../../app/globals';
 import { CommentInteractions } from '../../app/interactions/comment_interactions';
@@ -43,8 +43,9 @@ export class PostPage {
     public globals: Globals,
     public commentInteractions: CommentInteractions,
     public postInteractions: PostInteractions,
-    public userInformation: UserInformation)
-    {
+    public userInformation: UserInformation,
+    public actionSheetCtrl: ActionSheetController)
+  {
 
     this.topic_name = localStorage.getItem('standardTopicName');
 
@@ -66,7 +67,77 @@ export class PostPage {
     this.userInformation.refresh();
   }
 
-  public reportContent(table, id) {
+  public showOptions(table, id, user_id) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '',
+      buttons: [
+        {
+          text: 'Report this ' + table ,
+          handler: () => {
+            this.reasonOfReport(table, id, user_id);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {}
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  private reasonOfReport(table, id, user_id) {
+    let prompt = this.alertCtrl.create({
+     title: 'Why are you reporting this ' + table + '?',
+     message: '',
+     buttons: [
+       {
+         text: 'Revealing of personal information',
+         handler: data => {
+           this.reportContent(table, id, 'Revealing of personal information', user_id);
+         }
+       },{
+         text: 'Abuse or spam',
+         handler: data => {
+           this.reportContent(table, id, 'Abuse or spam', user_id);
+         }
+       },{
+         text: 'Another reason',
+         handler: data => {
+           let prompt2 = this.alertCtrl.create({
+            title: "Explain your reason of report",
+            message: "",
+            inputs: [
+              {
+                name: 'reason',
+                placeholder: 'Reason of report'
+              },
+            ],
+            buttons: [
+              {
+                text: 'Cancel',
+                handler: data => {}
+              },
+              {
+                text: 'Report',
+                handler: data => {
+                  this.reportContent(table, id, data.reason, user_id);
+                }
+              }
+            ]
+          });
+          prompt2.present();
+         }
+       },{
+         text: 'Cancel',
+         handler: data => {}
+       }
+     ]
+   });
+   prompt.present();
+  }
+
+  private reportContent(table, id, reason_text, user_id) {
     console.log(table, ' : ' , id);
 
     let headers = new Headers();
@@ -75,13 +146,14 @@ export class PostPage {
 
     let body = {
       user_id: this.userInformation._user_id,
+      user_content_creator_id: user_id,
       table_id: id,
       table: table
     };
 
     console.log(body)
 
-    this.http.post(this.globals._https_uri + 'abuse/report', JSON.stringify(body), {headers:headers})
+    this.http.post(this.globals._https_uri + 'abuse/reportpostcontent', JSON.stringify(body), {headers:headers})
     .map(res => res.json())
     .subscribe(data => {
 
@@ -93,8 +165,6 @@ export class PostPage {
         showCloseButton: true
       });
       toast.present();
-
-
     })
   }
 
