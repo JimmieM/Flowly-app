@@ -148,7 +148,8 @@ export class PostPage {
       user_id: this.userInformation._user_id,
       user_content_creator_id: user_id,
       table_id: id,
-      table: table
+      table: table,
+      reason: reason_text
     };
 
     console.log(body)
@@ -242,7 +243,7 @@ export class PostPage {
 
                 console.log(body)
 
-                this.http.post(this.globals._https_uri + 'user/createcontact', JSON.stringify(body), {headers:headers})
+                this.http.post(this.globals._https_uri + 'contacts/createcontact', JSON.stringify(body), {headers:headers})
                 .map(res => res.json())
                 .subscribe(data => {
                   console.log(data)

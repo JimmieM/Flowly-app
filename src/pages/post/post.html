@@ -28,15 +28,15 @@
           <div>{{post.post_dislikes}}</div>
         </button>
       </ion-col>
-      <ion-col center text-center>
-        <ion-note>
-          {{post.post_date}}
-        </ion-note>
-      </ion-col>
       <ion-col>
         <button (click)="showOptions('post',post.post_id, post.post_user_id);" ion-button icon-left clear small>
           <ion-icon name="ios-more"></ion-icon>
         </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          {{post.post_date}}
+        </ion-note>
       </ion-col>
     </ion-row>
   </ion-card>

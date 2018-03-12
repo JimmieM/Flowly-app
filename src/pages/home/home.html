@@ -33,8 +33,15 @@
   <br>
   <button color="light" clear *ngIf="flowModule.flow_content_empty[flow]" ion-button full>The flow seems empty</button>
   <ion-card-content *ngFor="let flow of flowModule.flow_content[flow]" >
-
-    <div (click)="openPost(flow)">
+    <div *ngIf="flow.post_filter" (click)="openPost(flow)">
+      <p style="background: #e573735c;
+    color: white;
+    padding: 14px;
+    width: 70%;
+    text-align:center;
+    border-radius: 5px;">This post has been reported</p>
+    </div>
+    <div *ngIf="!flow.post_filter" (click)="openPost(flow)">
       {{flow.post_content}}
     </div>
     <br>
@@ -76,7 +83,7 @@
   <button color="light" clear *ngIf="flowModule.flow_content_empty[flow]" ion-button full>The popular flow seems empty</button>
   <ion-card-content *ngFor="let flow of flowModule.flow_content[flow]" >
 
-    <div (click)="openPost(flow)">
+    <div [ngClass]="{'blur': flow.post_filter}" (click)="openPost(flow)">
       {{flow.post_content}}
     </div>
     <br>
@@ -118,7 +125,7 @@
   <button color="light" clear *ngIf="flowModule.flow_content_empty[flow]" ion-button full>The hated flow seems empty</button>
   <ion-card-content *ngFor="let flow of flowModule.flow_content[flow]" >
 
-    <div (click)="openPost(flow)">
+    <div [ngClass]="{'blur': flow.post_filter}" (click)="openPost(flow)">
       {{flow.post_content}}
     </div>
     <br>

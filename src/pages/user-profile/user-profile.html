@@ -33,27 +33,21 @@
       met {{profile.contacts_since}}
     </button>
 
-    <button ion-button clear small block color="danger" icon-start>
+    <!-- <button ion-button clear small block color="danger" icon-start>
       <ion-icon name='share-alt'></ion-icon>
       Met in flow
-    </button>
+    </button> -->
   </ion-row>
 
-<!-- <ion-row no-padding>
+<ion-row no-padding>
 
     <ion-col>
-      <button ion-button small color="warning" icon-start>
+      <button (click)="removeContactAlert()" ion-button small color="warning" icon-start>
         <ion-icon name='remove-circle'></ion-icon>
-        Remove contact
+        Remove {{profile_username}} as contact
       </button>
     </ion-col>
-    <ion-col text-center>
-      <button ion-button  small color="danger" icon-start>
-        <ion-icon name='flag'></ion-icon>
-        Report user
-      </button>
-    </ion-col>
-  </ion-row> -->
+  </ion-row>
 </ion-card>
 
 </ion-content>

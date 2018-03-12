@@ -35,9 +35,7 @@ export class ProfilePage {
 
   finishedLoading: boolean = false;
 
-
   activityBySegement: string = 'posts'; // defines the segement value
-
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -98,7 +96,7 @@ export class ProfilePage {
       answer: answer
     };
 
-    this.http.post(this.globals._https_uri + 'user/answercontact', JSON.stringify(body), {headers:headers})
+    this.http.post(this.globals._https_uri + 'contacts/answercontact', JSON.stringify(body), {headers:headers})
     .map(res => res.json())
     .subscribe(data => {
       console.log(data)
@@ -213,7 +211,7 @@ export class ProfilePage {
 
       console.log(body)
 
-      this.http.post(this.globals._https_uri + 'chat/getchats', JSON.stringify(body), {headers:headers})
+      this.http.post(this.globals._https_uri + 'contacts/getcontacts', JSON.stringify(body), {headers:headers})
       .map(res => res.json())
       .subscribe(data => {
         console.log(data)

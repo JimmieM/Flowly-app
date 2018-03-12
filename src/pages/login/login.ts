@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { Http, Headers }     from '@angular/http';
-import { AlertController } from 'ionic-angular';
+
 import { HomePage } from '../home/home';
 import { App } from 'ionic-angular';
 import { Content } from 'ionic-angular';
@@ -30,7 +30,6 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController,
     public http: Http,
-    public alertCtrl: AlertController,
     public toastCtrl: ToastController,
     public globals: Globals,
     public userInformation: UserInformation)
