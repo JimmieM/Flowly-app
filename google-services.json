@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "215041521810",
+    "firebase_url": "https://flowly-76fac.firebaseio.com",
+    "project_id": "flowly-76fac",
+    "storage_bucket": "flowly-76fac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215041521810:android:a79f61e54c31ae63",
+        "android_client_info": {
+          "package_name": "com.flowly.flowly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215041521810-9e73456uvm2ng5eq0v3vibms5glq12lt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHPHH5WKQOMTAg0RV5NPN4Y9zjmluhnGk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

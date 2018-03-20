@@ -23,7 +23,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button [disabled]="postInteractions.disableInteractionBtn(post.post__id)" (click)="postInteractions.islike('post', post.post_id, post.post_id)" ion-button icon-left clear small>
+        <button [disabled]="postInteractions.disableInteractionBtn(post.post_id)" (click)="postInteractions.islike('post', post.post_id, post.post_id)" ion-button icon-left clear small>
           <ion-icon name="thumbs-down"></ion-icon>
           <div>{{post.post_dislikes}}</div>
         </button>
@@ -78,7 +78,7 @@
       </ion-col>
 
       <ion-col>
-        <button (click)="showOptions('comment',comment.comment_id, comment.comment_user_id)" ion-button icon-left clear small>
+        <button  (click)="showOptions('comment',comment.comment_id, comment.comment_user_id)" ion-button icon-left clear small>
           <ion-icon name="ios-more"></ion-icon>
         </button>
       </ion-col>

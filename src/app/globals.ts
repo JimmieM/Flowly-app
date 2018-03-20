@@ -11,7 +11,7 @@ export class Globals {
   _key: string;
 
   constructor() {
-    this._prod = false;
+    this._prod = true;
 
     this._key = 'aadsa--djja33_#11@abd';
     this._https_uri = 'https://anonyflow.azurewebsites.net/api/';

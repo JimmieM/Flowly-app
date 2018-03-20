@@ -43,6 +43,7 @@ import { Flow } from './flow/flow';
 import { UserInformation } from './user_information';
 import { PostInteractions } from './interactions/post_interactions';
 import { CommentInteractions } from './interactions/comment_interactions';
+import { ReportInteractions } from './interactions/report_interactions';
 import { HTTPInteraction } from './interactions/interact-http';
 
 
@@ -106,6 +107,7 @@ import { HTTPInteraction } from './interactions/interact-http';
     PostPage,
     UserProfilePage,
     CommentInteractions,
+    ReportInteractions,
     UserInformation,
     HTTPInteraction,
     Flow,

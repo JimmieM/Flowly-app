@@ -66,11 +66,10 @@ export class LoginPage {
     .map(res => res.json())
     .subscribe(data => {
       this.disableBtn = false;
-      console.log(data);
+
       if(data.success) {
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('username', this.username);
-
           localStorage.setItem('userId', data.message);
 
            toast = this.toastCtrl.create({
@@ -78,7 +77,6 @@ export class LoginPage {
              duration: 3000,
              position: 'top'
            });
-           toast.present();
 
           this.navCtrl.push(ProfilePage);
       } else {
@@ -87,8 +85,8 @@ export class LoginPage {
           duration: 3000,
           position: 'top'
         });
-        toast.present();
       }
+      toast.present();
     })
   }
 

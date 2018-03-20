@@ -60,7 +60,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button (click)="openPost(flow)" ion-button icon-left clear small>
           <ion-icon name="chatboxes"></ion-icon>
           {{flow.post_comments.length}}
         </button>
@@ -82,8 +82,15 @@
   <br>
   <button color="light" clear *ngIf="flowModule.flow_content_empty[flow]" ion-button full>The popular flow seems empty</button>
   <ion-card-content *ngFor="let flow of flowModule.flow_content[flow]" >
-
-    <div [ngClass]="{'blur': flow.post_filter}" (click)="openPost(flow)">
+    <div *ngIf="flow.post_filter" (click)="openPost(flow)">
+      <p style="background: #e573735c;
+    color: white;
+    padding: 14px;
+    width: 70%;
+    text-align:center;
+    border-radius: 5px;">This post has been reported</p>
+    </div>
+    <div *ngIf="!flow.post_filter" (click)="openPost(flow)">
       {{flow.post_content}}
     </div>
     <br>
@@ -102,7 +109,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button (click)="openPost(flow)" ion-button icon-left clear small>
           <ion-icon name="chatboxes"></ion-icon>
           {{flow.post_comments.length}}
         </button>
@@ -124,8 +131,15 @@
   <br>
   <button color="light" clear *ngIf="flowModule.flow_content_empty[flow]" ion-button full>The hated flow seems empty</button>
   <ion-card-content *ngFor="let flow of flowModule.flow_content[flow]" >
-
-    <div [ngClass]="{'blur': flow.post_filter}" (click)="openPost(flow)">
+    <div *ngIf="flow.post_filter" (click)="openPost(flow)">
+      <p style="background: #e573735c;
+    color: white;
+    padding: 14px;
+    width: 70%;
+    text-align:center;
+    border-radius: 5px;">This post has been reported</p>
+    </div>
+    <div *ngIf="!flow.post_filter" (click)="openPost(flow)">
       {{flow.post_content}}
     </div>
     <br>
@@ -143,9 +157,8 @@
           <div>{{flow.post_dislikes}}</div>
         </button>
       </ion-col>
-
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button (click)="openPost(flow)" ion-button icon-left clear small>
           <ion-icon name="chatboxes"></ion-icon>
           {{flow.post_comments.length}}
         </button>

@@ -12,6 +12,7 @@ import * as Ably from 'ably';
 import { Globals } from '../../app/globals';
 import { CommentInteractions } from '../../app/interactions/comment_interactions';
 import { PostInteractions } from '../../app/interactions/post_interactions';
+import { ReportInteractions } from '../../app/interactions/report_interactions';
 import { UserInformation } from '../../app/user_information'
 
 @Component({
@@ -35,7 +36,8 @@ export class PostPage {
 
   post = [];
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     public http: Http,
     public alertCtrl: AlertController,
@@ -44,7 +46,8 @@ export class PostPage {
     public commentInteractions: CommentInteractions,
     public postInteractions: PostInteractions,
     public userInformation: UserInformation,
-    public actionSheetCtrl: ActionSheetController)
+    public actionSheetCtrl: ActionSheetController,
+    public reportInteractions: ReportInteractions)
   {
 
     this.topic_name = localStorage.getItem('standardTopicName');
@@ -138,35 +141,50 @@ export class PostPage {
   }
 
   private reportContent(table, id, reason_text, user_id) {
-    console.log(table, ' : ' , id);
 
-    let headers = new Headers();
+    let canInteract = this.reportInteractions.canInteract(id,table);
 
-    headers.append('Content-Type', 'application/json');
+    if(canInteract) {
+      let headers = new Headers();
 
-    let body = {
-      user_id: this.userInformation._user_id,
-      user_content_creator_id: user_id,
-      table_id: id,
-      table: table,
-      reason: reason_text
-    };
+      headers.append('Content-Type', 'application/json');
 
-    console.log(body)
+      let body = {
+        user_id: this.userInformation._user_id,
+        user_content_creator_id: user_id,
+        table_id: id,
+        table: table,
+        reason: reason_text
+      };
 
-    this.http.post(this.globals._https_uri + 'abuse/reportpostcontent', JSON.stringify(body), {headers:headers})
-    .map(res => res.json())
-    .subscribe(data => {
+      console.log(body)
 
-      console.log(data);
+      this.http.post(this.globals._https_uri + 'abuse/reportpostcontent', JSON.stringify(body), {headers:headers})
+      .map(res => res.json())
+      .subscribe(data => {
+        // save to report_interactions
+
+        this.reportInteractions.saveReport(id, table);
+
+        console.log(data);
+        let toast = this.toastCtrl.create({
+          message: 'Thank you for keeping Flowly clean!',
+          duration: 3000,
+          position: 'top',
+          showCloseButton: true
+        });
+        toast.present();
+      })
+    } else {
       let toast = this.toastCtrl.create({
-        message: 'Your report has been filed!',
+        message: "You've already reported this " + table,
         duration: 3000,
         position: 'top',
         showCloseButton: true
       });
       toast.present();
-    })
+    }
+
   }
 
   public loadPost(post_id) {

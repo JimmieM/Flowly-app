@@ -21,28 +21,52 @@
       </button>
     </div>
 
-    <div *ngIf="emptyNotifications && userInformation.loggedIn">
+    <div *ngIf="emptyNotifications && userInformation._logged_in">
       <button ion-item>
         You have no notifications
       </button>
     </div>
 
     <div *ngFor="let notification of notifications">
-      <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 1">
-        {{notification.notification_content}}
-        <br>
-        <ion-note style="font-size: 12px;">
-          {{notification.notification_date}}
-        </ion-note>
 
-      </button>
-      <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 0" style="    background: #e5737242;">
-        {{notification.notification_content}}
-        <br>
-        <ion-note style="font-size: 12px;">
-          {{notification.notification_date}}
-        </ion-note>
-      </button>
+      <!-- is not a post notification. -->
+      <div *ngIf="notification.notification_post_id == 0">
+        <button  ion-item *ngIf="notification.notification_seen === 1">
+          {{notification.notification_content}}
+          <br>
+          <ion-note style="font-size: 12px;">
+            {{notification.notification_date}}
+          </ion-note>
+
+        </button>
+        <button ion-item *ngIf="notification.notification_seen === 0" style="    background: #e5737242;">
+          {{notification.notification_content}}
+          <br>
+          <ion-note style="font-size: 12px;">
+            {{notification.notification_date}}
+          </ion-note>
+        </button>
+      </div>
+
+      <!-- is a post notification. -->
+      <div *ngIf="notification.notification_post_id != 0">
+        <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 1">
+          {{notification.notification_content}}
+          <br>
+          <ion-note style="font-size: 12px;">
+            {{notification.notification_date}}
+          </ion-note>
+
+        </button>
+        <button (click)="openPost(notification.notification_post_id, notification.notification_id)" ion-item *ngIf="notification.notification_seen === 0" style="    background: #e5737242;">
+          {{notification.notification_content}}
+          <br>
+          <ion-note style="font-size: 12px;">
+            {{notification.notification_date}}
+          </ion-note>
+        </button>
+      </div>
+
     </div>
 </ion-list>
 </ion-content>

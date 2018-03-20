@@ -28,7 +28,7 @@ import 'rxjs/add/operator/map';
 export class NotificationsPage {
 
   loginPage;
-  emptyNotifications: boolean = true;
+  emptyNotifications: boolean = false;
 
   notifications;
 
@@ -56,6 +56,8 @@ export class NotificationsPage {
     if(this.userInformation._logged_in) {
       this.finishedLoading = false;
       this.getNotifications();
+    } else {
+      this.emptyNotifications = true;
     }
   }
 

@@ -131,6 +131,8 @@ export class ChatPage {
     .subscribe(data => {
       let the_date = "";
 
+      console.log(data);
+
       if(data.success) {
         let post_channel = this.ably.channels.get('chat_user_id_' + this.chat_user_id);
         ​

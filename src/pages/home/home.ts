@@ -805,8 +805,6 @@ export class HomePage {
   }
 
   public openPost(post) {
-    console.log(post);
-
     this.navCtrl.push(PostPage, {
       post_data: post,
     });
